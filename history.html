@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button onclick="handlePush()">history pushState</button>
+  <button onclick="handleReplace()">history replaceState</button>
+  <a href="#header">header</a>
+  <div id="content"></div>
+  <script>
+    function handlePush() {
+      const state = {
+        name: 'push'
+      }
+      window.history.pushState(state, null, 'setting')
+    }
+
+    function handleReplace() {
+      const state = {
+        name: 'replace'
+      }
+      window.history.replaceState(state, 'null', './profile')
+    }
+    window.addEventListener('popstate', function(e) {
+      console.log(e)
+      document.querySelector('#content').innerText = JSON.stringify(e.state)
+    })
+
+    window.addEventListener('hashchange', function(e) {
+      console.log(e.newURL, e.oldURL)
+    })
+  </script>
+</body>
+</html>

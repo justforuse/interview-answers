@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flex</title>
+  <style>
+    .container {
+      display: flex;
+      width: 600px;
+      height: 300px;
+    }
+    .part1 {
+      background-color: plum;
+      /* 总宽度 = every item (flex-basis * flex-shrink) + ... */
+      /* 收缩的宽度 = flex-basis * flex-shrink / 总宽度 * flex-basis  */
+      /* 500 - 500 * 2 / 1400 * 300 */
+      flex: 1 2 500px;
+    }
+    .part2 {
+      background-color: cyan;
+      /* 400 - 400 * 1 / 1400 * 300 */
+      flex: 2 1 400px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="part1">1</div>
+    <div class="part2">2</div>
+  </div>
+</body>
+</html>

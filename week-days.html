@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div {
+      background-color: purple;
+    }
+    .float {
+      float: left;
+      background-color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div>
+    container Lorem ipsum dolor sit amet.
+    <div class="float">float Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, beatae.</div>
+  </div>
+
+  <script>
+    const dayArr = Array(7).fill().map((item, index) => index)
+
+    function printCurrentWeeks(date) {
+      const curDate = new Date(date)
+      const curIndex = dayArr.indexOf(curDate.getDay())
+      // print before
+      for(let i = 0; i<curIndex;i++) {
+        console.log(new Date(new Date(date).setDate(curDate.getDate() - (curIndex - i))))
+      }
+      console.log(new Date(date))
+      for(let i = curIndex + 1; i<7;i++) {
+        console.log(new Date(new Date(date).setDate(curDate.getDate() + (i - curIndex))))
+      }
+    }
+
+    printCurrentWeeks('2020-05-16')
+
+  </script>
+</body>
+</html>

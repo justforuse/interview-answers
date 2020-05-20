@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=2.0">
+  <title>Document</title>
+  <style>
+    .box1 {
+      width: 200px;
+      height: 200px;
+      background-color: purple;
+      z-index: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -100px;
+      margin-left: -100px;
+    }
+    .box1.active {
+      box-shadow: 0 0 10px #666;
+    }
+
+    .box2 {
+      width: 150px;
+      height: 120px;
+      background-color: blue;
+      z-index: 1;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box1"></div>
+
+  <div class="box2"></div>
+  <script>
+    var $el1 = document.querySelector('.box1');
+    var $el2 = document.querySelector('.box2');
+    
+    function checkAcross() {
+      const { top: el1Top, left: el1Left, width: el1Width, height: el1Height } = $el1.getBoundingClientRect()
+      const { top: el2Top, left: el2Left, width: el2Width, height: el2Height } = $el2.getBoundingClientRect()
+
+      const { top, left, width, height } = $el2.getBoundingClientRect()
+      if (top > el1Top + el1Height
+      || top + height < el1Top
+      || left > el1Left + el1Width
+      || left + width < el1Left) {
+        console.log('out')
+        $el1.classList.remove('active')
+      } else {
+        console.log('inner')
+        return $el1.classList.add('active')
+      }
+    }
+
+    function isAcross() {
+      fn2(checkAcross, 16)
+    }
+
+    
+
+    function fn2(fn, delay) {
+      var timer = null;
+      return function () {
+        if (timer) {
+          return false;
+        }
+        var arg = arguments;
+        timer = setTimeout(() => {
+          fn.apply(this, arg)
+          timer = null;
+        }, delay)
+      }
+    }
+
+    let isDrag = false
+    let mouseDownPos = {
+      x: 0,
+      y: 0
+    }
+    let elLeft = 0
+    let elTop = 0
+    $el2.addEventListener('mousedown', function(e) {
+      isDrag = true
+      mouseDownPos.x = e.clientX,
+      mouseDownPos.y = e.clientY
+      elLeft = $el2.getBoundingClientRect().left
+      elTop = $el2.getBoundingClientRect().top
+    })
+
+    const mouseMoveHandler = function(e) {
+      if(!isDrag) return
+      let diff = {
+        x: e.clientX - mouseDownPos.x,
+        y: e.clientY - mouseDownPos.y
+      }
+      
+      $el2.style.left = `${elLeft + diff.x}px`
+      $el2.style.top = `${elTop + diff.y}px`
+      checkAcross()
+    }
+
+    $el2.addEventListener('mousemove', fn2(mouseMoveHandler, 16))
+
+    $el2.addEventListener('mouseup', function() {
+      isDrag = false
+    })
+
+    $el2.addEventListener('mouseleave', function() {
+      isDrag = false
+    })
+
+
+
+    // function drag($el) {
+    //   $el.addEventListener('mousedown', function (e) {
+    //     // 初始偏移量0
+    //     var position = {
+    //       x: e.clientX,
+    //       y: e.clientY
+    //     };
+    //     $el.addEventListener('mousemove', fn2(function (e) {
+    //       //当前偏移量
+    //       const x = e.clientX - position.x;
+    //       const y = e.clientY - position.y;
+    //       // 处理边界问题
+    //       // 右边界出界
+    //       if ($el.offsetLeft + $el.style.width > document.documentElement.clientWidth) {
+    //         x = document.documentElement.clientWidth - $el.style.width
+    //       }
+    //       //左边界问题
+    //       if ($el.offsetLeft < 0) {
+    //         x = 0
+    //       }
+    //       // 上
+    //       if ($el.offsetTop < 0) {
+    //         y = 0
+    //       }
+    //       // 下
+    //       if ($el.offsetTop + $el.style.height > document.documentElement.clientHeight) {
+    //         y = document.documentElement.clientHeight - $el.style.height
+    //       }
+    //       // 重新计算位置
+    //       $el.style.left = `${position.x + x}px`;
+    //       $el.style.top = `${position.y + y}px`;
+    //       // 更新
+    //       position.x = $el.offsetLeft;
+    //       position.y = $el.offsetTop;
+    //     }))
+    //     $el.addEventListener('onmouseUp', function () {
+    //       $el.addEventListener('onmouseDown', null)
+    //       $el.addEventListener('onmouseMove', null)
+    //     })
+    //     e.preventDefault();
+    //   }, 300)
+    // }
+  </script>
+
+</body>
+
+</html>

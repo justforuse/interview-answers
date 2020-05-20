@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function format(number) {
+      const negative = number < 0
+      const parts = Math.abs(number).toString().split(".")
+      parts[0] = parts[0].split('').reverse().reduce((res, cur, index) => {
+        return `${cur}${index && (index % 3 === 0) ? ',' : ''}${res}`
+      }, '')
+      return (negative ? '-' : '') + parts.join('.')
+    }
+
+    format(12345.32433532)
+    format(-12345.32433532)
+    format(21341234)
+    format(9)
+  </script>
+</body>
+</html>
