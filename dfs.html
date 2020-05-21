@@ -27,7 +27,11 @@
       right: {
         val: 3,
         left: null,
-        right: null
+        right: {
+          val: 6,
+          left: null,
+          right: null
+        }
       }
     }
     function dfsMid(node) {
@@ -63,29 +67,31 @@
       // 1 1 2 2 4
       // 
       const stack = []
-      let cur = node
-      while(true) {
-        while(cur) {
-          stack.push(cur)
-          stack.push(cur)
-          cur = cur.left
+      const output = []
+      stack.push(node)
+      while(stack.length > 0) {
+        let cur = stack.pop()
+        output.push(cur.val)
+        if(cur.left) {
+          stack.push(cur.left)
         }
-        if(stack.length === 0) {
-          return
+        if(cur.right) {
+          stack.push(cur.right)
         }
-        cur = stack.pop()
-        if(stack.length > 0 && stack[stack.length - 1] === cur) {
-          cur = cur.right
-        } else {
-          console.log(cur.val)
-          cur = null
-        }
+
       }
+      console.log(output.reverse().join(' '))
     }
 
-    // dfsMid(tree) // 4 2 5 1 3
-    // dfsPre(tree) // 1 2 4 5 3
-    dfsPost(tree) // 4 5 2 3 1
+    dfsMid(tree) // 4 2 5 1 3 6
+    dfsPre(tree) // 1 2 4 5 3 6
+    dfsPost(tree) // 4 5 2 6 3 1
+
+  //       1
+  //   2       3
+  // 4   5
+    // stack 4
+  // out 1 3 2 5 4
   </script>
 </body>
 
