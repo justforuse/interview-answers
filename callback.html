@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let map = new Map()
+    function cacheRequest(url, callback) {
+      
+//       ;(function () { 
+//     var name = "Barry";
+// })();
+      ;(function (){
+        if(map.get(url)) {
+          return map.get(url).then(res => callback(res))
+        } else {
+          let promise = new Promise(resolve => {
+            setTimeout(() => {
+              const res = `${url}'s data at ${Date.now()}`
+              callback(res)
+              resolve(res)
+            }, 1000)
+          })
+          map.set(url, promise)
+        }
+      })();
+      
+    }
+
+    cacheRequest('/a', (res) => console.log('First: ', res))
+    setTimeout(() => {
+      cacheRequest('/a', (res) => console.log('Second: ', res))
+    }, 3000)
+    
+  </script>
+</body>
+</html>

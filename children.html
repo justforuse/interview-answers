@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="div1">
+    <br>
+    <span>div1</span>
+  </div>
+
+  <div id="div2"><br><span>div2</span></div>
+
+  <script>
+    const ele1 = document.querySelector('#div1')
+
+    console.log('------ DOM multi line -----')
+    console.log(ele1.children)
+    console.log(ele1.childNodes)
+    console.log(ele1.firstElementChild)
+    console.log(ele1.firstChild)
+
+    console.log('------ DOM single line ----')
+    const ele2 = document.querySelector('#div2')
+    console.log(ele2.children)
+    console.log(ele2.childNodes)
+    console.log(ele2.firstElementChild)
+    console.log(ele2.firstChild)
+  </script>
+</body>
+
+</html>

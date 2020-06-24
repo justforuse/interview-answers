@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const data = ["geeksforgeeks", "geeks", "geak", "geezer"]
+    
+    function solution(arr) {
+      if(!arr.length) {
+        return ''
+      }
+      if(arr.length === 1) {
+        return arr[0]
+      }
+
+      // 1. find shortest string
+      const shortestStr = arr.reduce((prev, cur) => {
+        if(cur.length < prev.length) {
+          return cur
+        } else {
+          return prev
+        }
+      }, arr[0])
+
+      // 2. loop shortest string
+      let res = ''
+      for(let i = 0;i<shortestStr.length;i++) {
+        const isSub = arr.every(str => str.indexOf(shortestStr.substring(0, i)) === 0)
+        if(isSub) {
+          i > 0 && (res += shortestStr[i - 1])
+        } else {
+          break
+        }
+      }
+
+      return res || false
+    }
+
+    console.log(solution(data))
+  </script>
+</body>
+</html>
